@@ -6,7 +6,7 @@ This project provides Reactive Extensions for JavaScript (RxJS) bindings for jQu
 
 ## GETTING STARTED
 
-There are a number of ways to get started with L2O.js depending on your environment.  
+There are a number of ways to get started with the jQuery Bindings for RxJS.  
 
 ### Download the Source
 
