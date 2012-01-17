@@ -44,19 +44,19 @@ The goal here is to take the input from our textbox and throttle it in a way tha
 	var throttledInput = $('#textInput')
 		.keyupAsObservable()
 
-Since we're only interested in the text, we'll use the [select]((http://msdn.microsoft.com/en-us/library/hh244311(v=VS.103).aspx)) method to take the event object and return the target's value.  
+Since we're only interested in the text, we'll use the [select](http://msdn.microsoft.com/en-us/library/hh244311\(v=VS.103\).aspx) method to take the event object and return the target's value.  
 
 		.select( function (ev) {
 			return $(ev.target).val();
 		})
 
-We're also not interested in query terms less than two letters, so we'll trim that user input by using the [where]((http://msdn.microsoft.com/en-us/library/hh229267(v=VS.103).aspx)) method returning whether the string length is appropriate.
+We're also not interested in query terms less than two letters, so we'll trim that user input by using the [where](http://msdn.microsoft.com/en-us/library/hh229267\(v=VS.103\).aspx) method returning whether the string length is appropriate.
 
 		.where( function (text) {
 			return text.length > 2;
 		})
 
-We also want to slow down the user input a little bit so that the external service won't be flooded with requests.  To do that, we'll use the [throttle]((http://msdn.microsoft.com/en-us/library/hh229298(v=VS.103).aspx))method with a timeout of 500 milliseconds, which will ignore your fast typing and only return a value after you have paused for that time span.  
+We also want to slow down the user input a little bit so that the external service won't be flooded with requests.  To do that, we'll use the [throttle](http://msdn.microsoft.com/en-us/library/hh229298\(v=VS.103\).aspx) method with a timeout of 500 milliseconds, which will ignore your fast typing and only return a value after you have paused for that time span.  
 
 		.throttle(500)
 
@@ -77,7 +77,7 @@ Putting it all together, our throttledInput looks like the following:
 		.throttle(500)
 		.distinctUntilChanged();
 
-Now that we have the throttled input from the textbox, we need to query our service, in this case, the Wikipedia API, for suggestions based upon our input.  To do this, we'll create a function called searchWikipedia which calls the jQuery.ajaxAsObservable method which wraps the existing jQuery Ajax request in an RxJS [AsyncSubject]((http://msdn.microsoft.com/en-us/library/hh229363(v=VS.103).aspx)).
+Now that we have the throttled input from the textbox, we need to query our service, in this case, the Wikipedia API, for suggestions based upon our input.  To do this, we'll create a function called searchWikipedia which calls the jQuery.ajaxAsObservable method which wraps the existing jQuery Ajax request in an RxJS [AsyncSubject](http://msdn.microsoft.com/en-us/library/hh229363\(v=VS.103\).aspx).
 
 	function searchWikipedia(term) {
 		return $.ajaxAsObservable({
@@ -89,7 +89,7 @@ Now that we have the throttled input from the textbox, we need to query our serv
 		});
 	}
 
-Now that the Wikipedia Search has been wrapped, we can tie together throttled input and our service call.  In this case, we will call select on the throttledInput to then take the text from our textInput and then use it to query Wikipedia, filtering out empty records.  Finally, to deal with concurrency issues, we'll need to ensure we're getting only the latest value.  Issues can arise with asynchronous programming where an earlier value, if not cancelled properly, can be returned before the latest value is returned, thus causing bugs.  To ensure that this doesn't happen, we have the [switchLatest]((http://msdn.microsoft.com/en-us/library/hh229197(v=VS.103).aspx)) method which returns only the latest value.
+Now that the Wikipedia Search has been wrapped, we can tie together throttled input and our service call.  In this case, we will call select on the throttledInput to then take the text from our textInput and then use it to query Wikipedia, filtering out empty records.  Finally, to deal with concurrency issues, we'll need to ensure we're getting only the latest value.  Issues can arise with asynchronous programming where an earlier value, if not cancelled properly, can be returned before the latest value is returned, thus causing bugs.  To ensure that this doesn't happen, we have the [switchLatest](http://msdn.microsoft.com/en-us/library/hh229197\(v=VS.103\).aspx) method which returns only the latest value.
 
 	var suggestions = throttledInput.select( function (text) {
  		return searchWikipedia(text);
@@ -139,6 +139,7 @@ We've only scratched the surface of this library in this simple example.
  * [mouseenter](http://api.jquery.com/mouseenter/) - mouseenterAsObservable
  * [mouseleave](http://api.jquery.com/mouseleave/) - mouseleaveAsObservable
  * [mousemove](http://api.jquery.com/mousemove/) - mousemoveAsObservable
+ * [mouseout](http://api.jquery.com/mouseout/) - mouseoutAsObservable
  * [mouseover](http://api.jquery.com/mouseover/) - mouseoverAsObservable
  * [mouseup](http://api.jquery.com/mouseup/) - mouseupAsObservable
  * [ready](http://api.jquery.com/ready/) - readyAsObservable
@@ -167,11 +168,11 @@ We've only scratched the surface of this library in this simple example.
  * [getScript](http://api.jquery.com/jQuery.getScript/) - getScriptAsObservable
  * [post](http://api.jquery.com/jQuery.post/) - postAsObservable
 
-* Deferreds
+* [Deferred Object](http://api.jquery.com/category/deferred-object/)
  * Deferred.toObservable
  * Rx.Observable.toDeferred
 
-* Callbacks
+* [Callbacks Object](http://api.jquery.com/category/callbacks-object/)
  * Callbacks.toObservable
 
 ## LICENSE
