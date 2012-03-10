@@ -17,7 +17,7 @@ To download the source of the jQuery Bindings for the Reactive Extensions for Ja
 
 ### Installing with NuGet
 
-Coming soon!
+	PM> Install-Package RxJS-Bridges-jQuery
 
 ### Getting Started with the jQuery Bindings
 
@@ -182,7 +182,7 @@ Copyright 2011 Microsoft Corporation
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-  http://www.apache.org/licenses/LICENSE-2.0
+  [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
