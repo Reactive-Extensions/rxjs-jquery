@@ -1,4 +1,8 @@
-    
+
+    /**
+     * Converts the jQuery Deferred to an Observable sequence
+     * @returns {Observable} An Observable sequence created from a jQuery Deferred object.
+     */    
     $.Deferred.prototype.toObservable = function () {
         var subject = new AsyncSubject();
         this.done(function () {
@@ -10,6 +14,10 @@
         return subject;
     };
 
+    /**
+     * Converts an existing Observable sequence to a jQuery Deferred object.
+     * @returns {Deferred} A jQuery Deferred object wrapping the Observable sequence.
+     */
     observableProto.toDeferred = function () {
         var deferred = $.Deferred();
         this.subscribe(function (value) {
@@ -22,6 +30,11 @@
 
     //in order to support jQuery 1.6.*
     if ($.Callbacks) {
+
+        /**
+         * Converts an existing Callbacks object to an Observable sequence
+         * @returns {Observable} An Observable sequence created from a jQuery Callbacks object.
+         */
         $.Callbacks.prototype.toObservable = function () {
                 var parent = this;
                 return observableCreate(function (observer) {
@@ -38,6 +51,14 @@
             };
     }
 
+    /**
+     * Attach an event handler function for one or more events to the selected elements as an Observable sequence.
+     *
+     * @param {String} events One or more space-separated event types and optional namespaces, such as "click" or "keydown.myPlugin".
+     * @param {String} [selector] A selector string to filter the descendants of the selected elements that trigger the event. If the selector is null or omitted, the event is always triggered when it reaches the selected element.
+     * @param {Any} [data] Data to be passed to the handler in event.data when an event is triggered.
+     * @returns {Observable} An Observable sequence which wraps the jQuery on method.
+     */
     proto.onAsObservable = function () {
         var parent = this, args = slice.call(arguments, 0);
         return observableCreate(function(observer) {
@@ -57,6 +78,13 @@
         });          
     };
 
+    /** 
+     * Attach a handler to an event for the elements as an Observable sequence.
+     *
+     * @param {String} eventType A string containing one or more DOM event types, such as "click" or "submit," or custom event names.
+     * @param {Object} eventData An object containing data that will be passed to the event handler.
+     * @returns {Observable} An Observable sequence which wraps the jQuery bind method.
+     */
     proto.bindAsObservable = function(eventType, eventData) {
         var parent = this;
         return observableCreate(function(observer) {

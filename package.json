@@ -1,8 +1,8 @@
 {
-  "name": "rxjs-jquery",
+  "name": "rx-jquery",
   "title": "Reactive Extensions for JavaScript bindings for jQuery",
   "description": "Library for composing asynchronous and event-based operations in JavaScript extending the jQuery library",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/Reactive-Extensions/rxjs-jquery",
   "author": {
     "name": "MS Open Tech",
@@ -18,12 +18,21 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   ],
-  "dependencies": {},
+  "jam": {
+    "main": "rx.jquery.js"
+  },  
+  "dependencies": {
+    "rx": "*",
+    "jquery": "*"
+  },
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-uglify": "~0.1.2",
-    "grunt-contrib-concat": "~0.1.3",
-    "grunt-contrib-qunit": "~0.2.0"
+    "grunt-cli": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-qunit": "*",
+    "grunt-contrib-watch": "*"
   },
   "keywords": [
     "Reactive",
@@ -33,5 +42,8 @@
     "RxJS",
     "Rx"
   ],
-  "main": "rx.jquery.js"
+  "main": "rx.jquery.js",
+  "scripts": {
+    "test": "grunt"
+  }  
 }

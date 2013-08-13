@@ -9,9 +9,9 @@
             return root.Rx;
         });
     } else if (typeof module == 'object' && module && module.exports == freeExports) {
-        module.exports = factory(root, module.exports, require('./rx'), require('./jQuery'));
+        module.exports = factory(root, module.exports, require('rx'), require('jquery'));
     } else {
         root.Rx = factory(root, {}, root.Rx, jQuery);
     }
-}(this, function (global, exp, root, $, undefined) {
+}(this, function (global, exp, Rx, $, undefined) {
     

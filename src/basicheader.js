@@ -1,11 +1,10 @@
     // Headers
-    var root = global.Rx,
-        observable = root.Observable,
+    var observable = Rx.Observable,
         observableProto = observable.prototype,
-        AsyncSubject = root.AsyncSubject,
+        AsyncSubject = Rx.AsyncSubject,
         observableCreate = observable.create,
         observableCreateWithDisposable = observable.createWithDisposable,
-        disposableEmpty = root.Disposable.empty,
+        disposableEmpty = Rx.Disposable.empty,
         slice = Array.prototype.slice,
         proto = $.fn;
     
