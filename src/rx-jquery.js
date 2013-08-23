@@ -1,32 +1,35 @@
+    // Check for deferred as of jQuery 1.5
+    if ($.Deferred) {
+        /**
+         * Converts the jQuery Deferred to an Observable sequence
+         * @returns {Observable} An Observable sequence created from a jQuery Deferred object.
+         */    
+        $.Deferred.prototype.toObservable = function () {
+            var subject = new AsyncSubject();
+            this.done(function () {
+                subject.onNext(slice.call(arguments));
+                subject.onCompleted();
+            }).fail(function () {
+                subject.onError(slice.call(arguments));
+            });
+            return subject;
+        };
 
-    /**
-     * Converts the jQuery Deferred to an Observable sequence
-     * @returns {Observable} An Observable sequence created from a jQuery Deferred object.
-     */    
-    $.Deferred.prototype.toObservable = function () {
-        var subject = new AsyncSubject();
-        this.done(function () {
-            subject.onNext(slice.call(arguments));
-            subject.onCompleted();
-        }).fail(function () {
-            subject.onError(slice.call(arguments));
-        });
-        return subject;
-    };
+        /**
+         * Converts an existing Observable sequence to a jQuery Deferred object.
+         * @returns {Deferred} A jQuery Deferred object wrapping the Observable sequence.
+         */
+        observableProto.toDeferred = function () {
+            var deferred = $.Deferred();
+            this.subscribe(function (value) {
+                deferred.resolve(value);
+            }, function (e) { 
+                deferred.reject(e);
+            });
+            return deferred;  
+        };        
+    }
 
-    /**
-     * Converts an existing Observable sequence to a jQuery Deferred object.
-     * @returns {Deferred} A jQuery Deferred object wrapping the Observable sequence.
-     */
-    observableProto.toDeferred = function () {
-        var deferred = $.Deferred();
-        this.subscribe(function (value) {
-            deferred.resolve(value);
-        }, function (e) { 
-            deferred.reject(e);
-        });
-        return deferred;  
-    };
 
     //in order to support jQuery 1.6.*
     if ($.Callbacks) {
