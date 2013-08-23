@@ -1,33 +1,55 @@
 <!DOCTYPE html>
-    <head>
-        <title>Rx for JavaScript Rocks!</title>   
-        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js" type="text/javascript"></script>
-        <script src="rx.js" type="text/javascript"></script>
-        <script src="rx.aggregates.js" type="text/javascript"></script>
-        <script src="../lib/rx.jquery.js" type="text/javascript"></script>
-        <script type="text/javascript">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <title>Rx for JavaScript Rocks!</title>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap-responsive.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>RxJS for jQuery Bindings Konami Code example</h1>
+            <p class="lead">Example to show the Konami Code in action!</p>
+        </div>
+        <div class="row-fluid">
+            <h3>Enter the Konami Code</h3>
+            <p>Up Up Down Down Left Right Left Right B A</p> 
+        </div>
+        <div class="row-fluid">    
+            <h1 id="result"></h1>
+        </div>
+    </div>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/bootstrap.min.js"></script>
+    <script src="../node_modules/rx/rx.js"></script>
+    <script src="../node_modules/rx/rx.aggregates.js"></script>
+    <script src="../rx.jquery.js"></script>
+    <script>
 
-            (function ($) {
+    (function ($) {
 
-                $(function () {
-                    var codes = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
-                    ,   konami = Rx.Observable.fromArray(codes)
-                    ,   result = $('#result');
+        function identity (x) { return x; }
 
-                    $(document).keyupAsObservable()
-                        .select(function (e) { return e.keyCode; })
-                        .windowWithCount(10)
-                        .selectMany(function (x) { return x.sequenceEqual(konami); })
-                        .where(function (equal) { return equal; })
-                        .subscribe(function () {
-                            result.html('KONAMI!').fadeOut(2000);
-                        });
+        $(function () {
+            var codes = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+                konami = Rx.Observable.fromArray(codes),
+                result = $('#result');
+
+            $(document).keyupAsObservable()
+                .select(function (e) { return e.keyCode; })
+                .windowWithCount(10)
+                .selectMany(function (x) { return x.sequenceEqual(konami); })
+                .where(identity)
+                .subscribe(function () {
+                    result.html('KONAMI!').fadeOut(2000);
                 });
-            })(jQuery);
-        </script>
-    </head>
-
-    <body style="font-family: Consolas, monospace; overflow: hidden">
-        <div id="result"></div>
-    </body>
+        });
+    })(jQuery);
+    </script>    
+</body>
 </html>

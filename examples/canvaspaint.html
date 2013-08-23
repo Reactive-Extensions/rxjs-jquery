@@ -1,49 +1,73 @@
 <!DOCTYPE html>
-	<head>
-        <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-        <script src="rx.min.js" type="text/javascript"></script>
-        <script src="rx.jquery.js" type="text/javascript"></script>
-		<script type="text/javascript">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <title>Rx for JavaScript Rocks!</title>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap-responsive.min.css">
+    <style>
+        canvas {
+            background-color: #cccccb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>RxJS for jQuery Bindings Canvas Paint Example</h1>
+            <p class="lead">Example to show combining mouse events to draw on an HTML5 Canvas</p>
+        </div>
+        <div class="row-fluid">    
+            <canvas id="tutorial" width="640" height="480"></canvas>
+        </div>
+    </div>
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/bootstrap.min.js"></script>
+    <script src="../node_modules/rx/rx.js"></script>
+    <script src="../rx.jquery.js"></script>    
+    <script type="text/javascript">
 
-			function getOffset(event) {
-				return { 
-					offsetX: event.offsetX === undefined ? event.layerX : event.offsetX,
-	 				offsetY: event.offsetY === undefined ? event.layerY : event.offsetY
- 				};
-			}
+        function getOffset(event) {
+            return { 
+                offsetX: event.offsetX === undefined ? event.layerX : event.offsetX,
+                offsetY: event.offsetY === undefined ? event.layerY : event.offsetY
+            };
+        }
 
-			$(function () {
-				var canvas = document.getElementById('tutorial');
-				if (canvas.getContext) {
-					var ctx = canvas.getContext('2d');
-					ctx.beginPath();
+        $(function () {
+            var canvas = document.getElementById('tutorial');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
 
-					var cv = $('#tutorial');
+                var cv = $('#tutorial');
 
-					// Calculate mouse deltas
-					var mouseMoves = cv.onAsObservable('mousemove')
-					, mouseDiffs = mouseMoves.bufferWithCount(2, 1).select(function (x) {
-						return { first: getOffset(x[0]), second: getOffset(x[1]) };
-					})
+                // Calculate mouse deltas
+                var mouseMoves = cv.onAsObservable('mousemove');
+                var mouseDiffs = mouseMoves.bufferWithCount(2, 1).select(function (x) {
+                    return { first: getOffset(x[0]), second: getOffset(x[1]) };
+                });
 
-					// Merge mouse down and mouse up
-					, mouseButton = cv.onAsObservable('mousedown').select(function (x) { return true; })
-						.merge(cv.onAsObservable('mouseup').select(function (x) { return false; }))
+                // Merge mouse down and mouse up
+                var mouseButton = cv.onAsObservable('mousedown').select(function (x) { return true; })
+                    .merge(cv.onAsObservable('mouseup').select(function (x) { return false; }))
 
-					// Determine whether to paint or lift
-					, paint = mouseButton.select(function (down) { return down ? mouseDiffs : mouseDiffs.take(0) }).switchLatest();
+                // Determine whether to paint or lift
+                var paint = mouseButton.select(function (down) { return down ? mouseDiffs : mouseDiffs.take(0) }).switchLatest();
 
-					// Paint the results
-					paint.subscribe(function (x) {
-						ctx.moveTo(x.first.offsetX, x.first.offsetY);
-						ctx.lineTo(x.second.offsetX, x.second.offsetY);
-						ctx.stroke();
-					});
-				}
-			});
-		</script>
-	</head>
-	<body>
-		<canvas id="tutorial" width="640" height="480"></canvas>
-	</body>
+                // Paint the results
+                var subscription = paint.subscribe(function (x) {
+                    ctx.moveTo(x.first.offsetX, x.first.offsetY);
+                    ctx.lineTo(x.second.offsetX, x.second.offsetY);
+                    ctx.stroke();
+                });
+            }
+        });
+    </script>     
+</body>   
 </html>

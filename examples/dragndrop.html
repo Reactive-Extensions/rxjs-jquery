@@ -1,46 +1,76 @@
 <!DOCTYPE html>
-	<head>
-        <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-        <script src="rx.min.js" type="text/javascript"></script>
-        <script src="rx.jquery.js" type="text/javascript"></script>
-		<script type="text/javascript">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <title>Rx for JavaScript Rocks!</title>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap-responsive.min.css">
+    <style>
+        html  {
+          -moz-user-select: none;
+          -khtml-user-select: none;
+          -webkit-user-select: none;
+          user-select: none;
+        }
+    
+        #dragTarget {
+            background-color: #3a3a3a; 
+            border: 1px solid #191718;
+            color: #99C300; 
+            padding: 10px; 
+            position: absolute;
+            font-family: sans-serif; 
+            cursor: move;
+        }
+    </style>  
+</head>
+<body>
+    <div id="dragTarget">Drag Me!</div>
+    <div class="container">
+        <div class="page-header">
+            <h1>RxJS for jQuery Bindings Drag and Drop Example</h1>
+            <p class="lead">Example to show coordinating events to perform drag and drop</p>
+        </div>
+    </div>      
 
-			$(function () {
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/bootstrap.min.js"></script>
+    <script src="../node_modules/rx/rx.js"></script>
+    <script src="../node_modules/rx/rx.aggregates.js"></script>
+    <script src="../rx.jquery.js"></script>
+    <script>
+    $(function () {
 
-				var dragTarget = $('#dragTarget')
+        var dragTarget = $('#dragTarget')
 
-				// Get the three major events
-				, mouseup = dragTarget.onAsObservable('mouseup')
-				, mousemove = dragTarget.onAsObservable('mousemove')
-				, mousedown = dragTarget.onAsObservable('mousedown').select(function (event) {
-					// calculate offsets when mouse down
-					event.preventDefault();
-					return { left: event.clientX - dragTarget.offset().left, top: event.clientY - dragTarget.offset().top };
-				})
+        // Get the three major events
+        var mouseup = dragTarget.onAsObservable('mouseup');
+        var mousemove = dragTarget.onAsObservable('mousemove');
+        var mousedown = dragTarget.onAsObservable('mousedown').select(function (event) {
+            // calculate offsets when mouse down
+            event.preventDefault();
+            return { left: event.clientX - dragTarget.offset().left, top: event.clientY - dragTarget.offset().top };
+        });
 
-				// Combine mouse down with mouse move until mouse up
-				, mousedrag = mousedown.selectMany(function(imageOffset) {
-					return mousemove.select(function (pos) {
-						// calculate offsets from mouse down to mouse moves
-						return {
-							left: pos.clientX - imageOffset.left, top: pos.clientY - imageOffset.top
-						};
-					}).takeUntil(mouseup);
-				});
+        // Combine mouse down with mouse move until mouse up
+        var mousedrag = mousedown.selectMany(function(imageOffset) {
+            return mousemove.select(function (pos) {
+                // calculate offsets from mouse down to mouse moves
+                return {
+                    left: pos.clientX - imageOffset.left, top: pos.clientY - imageOffset.top
+                };
+            }).takeUntil(mouseup);
+        });
 
-				mousedrag.subscribe (function (pos) {
-					// Update position
-					$('#dragTarget').css({top: pos.top, left: pos.left});
-				});
-			});
-		</script>
-	</head>
-	<body>
-		<div id="dragTarget"
-		     style="background-color: #000000; border: 1px solid #666666;
-		            color: #ffffff; padding: 10px; position: absolute;
-		            font-family: sans-serif; cursor: move">
-		Drag Me!
-		</div>
-	</body>
+        var subscription = mousedrag.subscribe (function (pos) {
+            // Update position
+            $('#dragTarget').css({top: pos.top, left: pos.left});
+        });
+    });
+    </script>    
+</body>
 </html>
