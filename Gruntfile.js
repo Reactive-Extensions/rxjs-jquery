@@ -27,7 +27,6 @@ module.exports = function (grunt) {
                     'src/license.js',
                     'src/intro.js',
                     'src/basicheader.js',
-                    'src/polyfills',
                     'src/rx-jquery.js',
                     'src/outro.js'
                 ],

@@ -8,7 +8,6 @@ test('On_With_Data', function () {
     var d = element.onAsObservable('someEvent', 42)
         .subscribe(function (event) {
             equal(event.data, 42);
-            //start();
         });
 
     element.trigger('someEvent');
