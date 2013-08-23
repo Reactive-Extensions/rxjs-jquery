@@ -1,4 +1,4 @@
-jQuery Bindings for the Reactive Extensions for JavaScript
+RxJS-jQuery <sup>2.0</sup> - jQuery Bindings for the Reactive Extensions for JavaScript 
 ==========================================================
 ## OVERVIEW
 
@@ -6,7 +6,7 @@ This project provides Reactive Extensions for JavaScript (RxJS) bindings for jQu
 
 ## GETTING STARTED
 
-There are a number of ways to get started with the jQuery Bindings for RxJS.  
+There are a number of ways to get started with the jQuery Bindings for RxJS. The files are available on [cdnjs](http://cdnjs.com/) and [jsDelivr](http://www.jsdelivr.com/#!rxjs-jquery).
 
 ### Download the Source
 
@@ -14,6 +14,18 @@ To download the source of the jQuery Bindings for the Reactive Extensions for Ja
 
     git clone https://github.com/Reactive-Extensions/rxjs-jquery.git
     cd ./rxjs-jquery
+
+### Installing with [NPM](https://npmjs.org/)
+
+	npm install rx-jquery
+
+### Installing with [Bower](http://bower.io/)
+
+	bower install rx-jquery
+
+### Installing with [Jam](http://jamjs.org/)
+	
+	jam install rx-jquery
 
 ### Installing with NuGet
 
@@ -89,13 +101,10 @@ Now that we have the throttled input from the textbox, we need to query our serv
 		});
 	}
 
-Now that the Wikipedia Search has been wrapped, we can tie together throttled input and our service call.  In this case, we will call select on the throttledInput to then take the text from our textInput and then use it to query Wikipedia, filtering out empty records.  Finally, to deal with concurrency issues, we'll need to ensure we're getting only the latest value.  Issues can arise with asynchronous programming where an earlier value, if not cancelled properly, can be returned before the latest value is returned, thus causing bugs.  To ensure that this doesn't happen, we have the [switchLatest](http://msdn.microsoft.com/en-us/library/hh229197\(v=VS.103\).aspx) method which returns only the latest value.
+Now that the Wikipedia Search has been wrapped, we can tie together throttled input and our service call.  Finally, to deal with concurrency issues, we'll need to ensure we're getting only the latest value.  Issues can arise with asynchronous programming where an earlier value, if not cancelled properly, can be returned before the latest value is returned, thus causing bugs.  To ensure that this doesn't happen, we have the [switchLatest](http://msdn.microsoft.com/en-us/library/hh229197\(v=VS.103\).aspx) method which returns only the latest value.
 
 	var suggestions = throttledInput.select( function (text) {
  		return searchWikipedia(text);
-	})
-	.where( function (data) {
-		return data.length == 2 && data[1].length > 0;
 	})
 	.switchLatest();
 
@@ -177,7 +186,7 @@ We've only scratched the surface of this library in this simple example.
 
 ## LICENSE
 
-Copyright 2011 Microsoft Corporation
+Copyright 2013 Microsoft Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
