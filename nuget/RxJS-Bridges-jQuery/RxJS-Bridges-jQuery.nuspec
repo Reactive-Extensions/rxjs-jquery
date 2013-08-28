@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>RxJS-Bridges-jQuery</id>
+    <title>Reactive Extensions for JavaScript - Bridges to jQuery </title>
+    <!-- Automatically updated by build, keeping fixed dev build number here in case of local build -->
+    <version>1.1.0.0</version>
+    <authors>Microsoft Corporation</authors>
+    <description>This project provides Reactive Extensions for JavaScript (RxJS) bindings for jQuery to abstract over the event binding, Ajax and Deferreds.</description>
+    <projectUrl>https://github.com/Reactive-Extensions/rxjs-jquery</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkId=261274</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <language>en-US</language>
+    <tags>Rx RxJS Reactive Extensions Observable</tags>
+    <dependencies>
+      <!-- Automatically updated by build, keeping fixed dev build number here in case of local build -->
+      <dependency id="RxJS-Main" version="2.1.11.0" />
+      <dependency id="jQuery" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\rx.jquery.js" target="content\Scripts\rx.jquery.js" />
+    <file src="..\..\rx.jquery.min.js" target="content\Scripts\rx.jquery.min.js" />
+  </files>
+</package>
