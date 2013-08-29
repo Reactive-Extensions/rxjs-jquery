@@ -4,9 +4,9 @@
          * Converts the jQuery Deferred to an Observable sequence
          * @returns {Observable} An Observable sequence created from a jQuery Deferred object.
          */    
-        $.Deferred.prototype.toObservable = function () {
+        $.Deferred.toObservable = function (deferred) {
             var subject = new AsyncSubject();
-            this.done(function () {
+            deferred.done(function () {
                 subject.onNext(slice.call(arguments));
                 subject.onCompleted();
             }).fail(function () {
