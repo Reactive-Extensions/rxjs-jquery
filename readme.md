@@ -6,7 +6,7 @@ This project provides Reactive Extensions for JavaScript (RxJS) bindings for jQu
 
 ## GETTING STARTED
 
-There are a number of ways to get started with the jQuery Bindings for RxJS. The files are available on [cdnjs](http://cdnjs.com/) and [jsDelivr](http://www.jsdelivr.com/#!rxjs-jquery).
+There are a number of ways to get started with the jQuery Bindings for RxJS. The files are available on [cdnjs](http://cdnjs.com/) and [jsDelivr](http://www.jsdelivr.com/#!jquery.rxjs).
 
 ### Download the Source
 
