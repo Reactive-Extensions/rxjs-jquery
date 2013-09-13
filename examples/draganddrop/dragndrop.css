@@ -1,3 +1,10 @@
+html  {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}   
+
 #dragTarget {
     background-image: url(logo.png);
     background-repeat: no-repeat;

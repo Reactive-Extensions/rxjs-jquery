@@ -1,14 +1,17 @@
 $(function () {
 
-    var dragTarget = $('#dragTarget')
+    var dragTarget = $('#dragTarget');
 
     // Get the three major events
-    var mouseup = dragTarget.onAsObservable('mouseup');
-    var mousemove = dragTarget.onAsObservable('mousemove');
-    var mousedown = dragTarget.onAsObservable('mousedown').map(function (event) {
+    var mouseup = dragTarget.bindAsObservable('mouseup').publish().refCount();
+    var mousemove = $(document).bindAsObservable('mousemove').publish().refCount();
+    var mousedown = dragTarget.bindAsObservable('mousedown').publish().refCount().map(function (event) {
         // calculate offsets when mouse down
         event.preventDefault();
-        return { left: event.clientX - dragTarget.offset().left, top: event.clientY - dragTarget.offset().top };
+        return { 
+            left: event.clientX - dragTarget.offset().left, 
+            top: event.clientY - dragTarget.offset().top,
+        };
     });
 
     // Combine mouse down with mouse move until mouse up
