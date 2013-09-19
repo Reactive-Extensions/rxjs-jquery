@@ -27,7 +27,11 @@ module.exports = function (grunt) {
                     'src/license.js',
                     'src/intro.js',
                     'src/basicheader.js',
-                    'src/rx-jquery.js',
+                    'src/deferred.js',
+                    'src/callbacks.js',
+                    'src/events.js',
+                    'src/animation.js',
+                    'src/ajax.js',
                     'src/outro.js'
                 ],
                 dest: 'rx.jquery.js'

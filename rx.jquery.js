@@ -55,9 +55,7 @@
             return deferred;  
         };        
     }
-
-
-    //in order to support jQuery 1.6.*
+        //in order to support jQuery 1.6.*
     if ($.Callbacks) {
 
         /**
@@ -65,23 +63,21 @@
          * @returns {Observable} An Observable sequence created from a jQuery Callbacks object.
          */
         $.Callbacks.prototype.toObservable = function () {
-                var parent = this;
-                return observableCreate(function (observer) {
+            var parent = this;
+            return observableCreate(function (observer) {
 
-                    function handler(values) {
-                        observer.onNext(values);
-                    }
+                function handler(values) {
+                    observer.onNext(values);
+                }
 
-                    parent.add(handler);
+                parent.add(handler);
 
-                    return function () {
-                        parent.remove(handler);
-                    };
-                });
-            };
-    }
-
-    if (!!proto.on) {
+                return function () {
+                    parent.remove(handler);
+                };
+            });
+        };
+    }    if (!!proto.on) {
         /**
          * Attach an event handler function for one or more events to the selected elements as an Observable sequence.
          *
@@ -106,7 +102,7 @@
                 return function() {
                     parent.off.apply(parent, args);
                 };
-            });          
+            }).publish().refCount();          
         };
     }
 
@@ -131,7 +127,7 @@
             return function() {
                 parent.unbind(eventType, eventData, handler);
             };
-        });
+        }).publish().refCount();
     };
 
     /**
@@ -156,7 +152,7 @@
             return function() {
                 parent.undelegate(selector, eventType, handler);
             };
-        });
+        }).publish().refCount();
     };
 
     // Removed as of 1.9
@@ -182,7 +178,7 @@
                 return function() {
                     parent.die(eventType, data, handler);
                 };
-            });
+            }).publish().refCount();
         };
     }
 
@@ -434,7 +430,6 @@
             parent.ready(handler);
         });
     };
-
     function handeAnimation(jQueryProto, method, args) {
         var options = args[0];
 
@@ -672,7 +667,6 @@
     proto.toggleAsObservable = function(duration, easing) {
         return handeAnimation(this, 'toggle', arguments);
     };
-
     var ajaxAsObservable = $.ajaxAsObservable = function(settings) {      
         var subject = new AsyncSubject();
 

@@ -7,4 +7,8 @@
         disposableEmpty = Rx.Disposable.empty,
         slice = Array.prototype.slice,
         proto = $.fn;
+
+    function observableCreateRefCount(subscribe) {
+    	return observableCreate(subscribe).publish().refCount();
+    }
     
