@@ -22,7 +22,7 @@
 
         jQueryProto[method](options);
 
-        return subject;
+        return subject.asObservable();
     }
 
     /**
@@ -95,7 +95,7 @@
 
         this.animate(properties, options);
 
-        return subject;
+        return subject.asObservable();
     };
 
     /**
@@ -131,7 +131,7 @@
             subject.onCompleted();
         });
 
-        return subject;
+        return subject.asObservable();
     };
 
     /**
