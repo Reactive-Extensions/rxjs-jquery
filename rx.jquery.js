@@ -24,6 +24,10 @@
         disposableEmpty = Rx.Disposable.empty,
         slice = Array.prototype.slice,
         proto = $.fn;
+
+    function observableCreateRefCount(subscribe) {
+    	return observableCreate(subscribe).publish().refCount();
+    }
         // Check for deferred as of jQuery 1.5
     if ($.Deferred) {
         /**
@@ -88,7 +92,7 @@
          */
         proto.onAsObservable = function () {
             var parent = this, args = slice.call(arguments, 0);
-            return observableCreate(function(observer) {
+            return observableCreateRefCount(function(observer) {
 
                 function handler(eventObject) {
                     eventObject.additionalArguments = slice.call(arguments, 1);
@@ -102,7 +106,7 @@
                 return function() {
                     parent.off.apply(parent, args);
                 };
-            }).publish().refCount();          
+            });         
         };
     }
 
@@ -115,7 +119,7 @@
      */
     proto.bindAsObservable = function(eventType, eventData) {
         var parent = this;
-        return observableCreate(function(observer) {
+        return observableCreateRefCount(function(observer) {
 
             function handler(eventObject) {
                 eventObject.additionalArguments = slice.call(arguments, 1);
@@ -127,7 +131,7 @@
             return function() {
                 parent.unbind(eventType, eventData, handler);
             };
-        }).publish().refCount();
+        });
     };
 
     /**
@@ -140,7 +144,7 @@
      */
     proto.delegateAsObservable = function(selector, eventType, eventData) {
         var parent = this;
-        return observableCreate(function(observer) {
+        return observableCreateRefCount(function(observer) {
 
             function handler(eventObject) {
                 eventObject.additionalArguments = slice.call(arguments, 1);
@@ -152,7 +156,7 @@
             return function() {
                 parent.undelegate(selector, eventType, handler);
             };
-        }).publish().refCount();
+        });
     };
 
     // Removed as of 1.9
@@ -166,7 +170,7 @@
          */
         proto.liveAsObservable = function(eventType, data) {
             var parent = this;
-            return observableCreate(function(observer) {
+            return observableCreateRefCount(function(observer) {
 
                 function handler(eventObject) {
                     eventObject.additionalArguments = slice.call(arguments, 1);
@@ -178,7 +182,7 @@
                 return function() {
                     parent.die(eventType, data, handler);
                 };
-            }).publish().refCount();
+            });
         };
     }
 
@@ -454,7 +458,7 @@
 
         jQueryProto[method](options);
 
-        return subject;
+        return subject.asObservable();
     }
 
     /**
@@ -527,7 +531,7 @@
 
         this.animate(properties, options);
 
-        return subject;
+        return subject.asObservable();
     };
 
     /**
@@ -563,7 +567,7 @@
             subject.onCompleted();
         });
 
-        return subject;
+        return subject.asObservable();
     };
 
     /**
