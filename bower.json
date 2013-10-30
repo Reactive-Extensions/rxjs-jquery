@@ -1,6 +1,6 @@
 {
-  "name": "Rx-jQuery",
-  "version": "1.1.4",
+  "name": "rxjs-jquery",
+  "version": "1.1.5",
   "main": "rx.jquery.js",
   "dependencies": {
     "rxjs": "*"

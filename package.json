@@ -2,15 +2,15 @@
   "name": "rx-jquery",
   "title": "Reactive Extensions for JavaScript bindings for jQuery",
   "description": "Library for composing asynchronous and event-based operations in JavaScript extending the jQuery library",
-  "version": "1.1.4",
-  "homepage": "https://github.com/Reactive-Extensions/rxjs-jquery",
+  "version": "1.1.5",
+  "homepage": "https://github.com/Reactive-Extensions/RxJS-jQuery",
   "author": {
     "name": "MS Open Tech",
-    "url": "https://github.com/Reactive-Extensions/rxjs-jquery/blob/master/authors.txt"
+    "url": "https://github.com/Reactive-Extensions/RxJS-jQuery/blob/master/authors.txt"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Reactive-Extensions/rxjs-jquery.git"
+    "url": "https://github.com/Reactive-Extensions/RxJS-jQuery.git"
   },
   "licenses": [
     {

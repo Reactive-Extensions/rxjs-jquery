@@ -1,4 +1,4 @@
-    function handeAnimation(jQueryProto, method, args) {
+    function handleAnimation(jQueryProto, method, args) {
         var options = args[0];
 
         // Check for duration
@@ -16,7 +16,7 @@
         var subject = new AsyncSubject();
 
         options.complete = function() {
-            subject.onNext(this);
+            subject.onNext(jQueryProto);
             subject.onCompleted();
         };
 
@@ -39,7 +39,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery hide method.     
      */
     proto.hideAsObservable = function (options) {
-        return handeAnimation(this, 'hide', arguments);
+        return handleAnimation(this, 'hide', arguments);
     };
 
     /**
@@ -56,7 +56,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery show method.     
      */
     proto.showAsObservable = function(options) {
-        return handeAnimation(this, 'show', arguments);
+        return handleAnimation(this, 'show', arguments);
     };
 
     /**
@@ -112,7 +112,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery fadeIn method.     
      */
     proto.fadeInAsObservable = function(options) {
-        return handeAnimation(this, 'fadeIn', arguments);
+        return handleAnimation(this, 'fadeIn', arguments);
     };
 
     /**
@@ -127,7 +127,7 @@
         var subject = new AsyncSubject();
 
         this.fadeTo(duration, opacity, easing, function() {
-            subject.onNext(this);
+            subject.onNext(proto);
             subject.onCompleted();
         });
 
@@ -148,7 +148,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery fadeOut method.     
      */
     proto.fadeOutAsObservable = function(options) {
-        return handeAnimation(this, 'fadeOut', arguments);
+        return handleAnimation(this, 'fadeOut', arguments);
     };
 
     /**
@@ -165,7 +165,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery fadeToggle method.     
      */
     proto.fadeToggleAsObservable = function(options) {
-        return handeAnimation(this, 'fadeToggle', arguments);
+        return handleAnimation(this, 'fadeToggle', arguments);
     };
 
     /**
@@ -182,7 +182,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery slideDown method.     
      */
     proto.slideDownAsObservable = function(options) {
-        return handeAnimation(this, 'slideDown', arguments);
+        return handleAnimation(this, 'slideDown', arguments);
     };
 
     /**
@@ -199,7 +199,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery slideUp method.     
      */
     proto.slideUpAsObservable = function(options) {
-        return handeAnimation(this, 'slideUp', arguments);
+        return handleAnimation(this, 'slideUp', arguments);
     };
 
     /**
@@ -216,7 +216,7 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery slideToggle method.     
      */
     proto.slideToggleAsObservable = function(options) {
-        return handeAnimation(this, 'slideToggle', arguments);
+        return handleAnimation(this, 'slideToggle', arguments);
     };
 
     /**
@@ -233,5 +233,5 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery slideToggle method.     
      */
     proto.toggleAsObservable = function(duration, easing) {
-        return handeAnimation(this, 'toggle', arguments);
+        return handleAnimation(this, 'toggle', arguments);
     };
