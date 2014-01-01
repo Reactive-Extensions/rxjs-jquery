@@ -8,7 +8,7 @@
          * @returns {Observable} An Observable sequence which wraps the jQuery on method.
          */
         proto.onAsObservable = function () {
-            var parent = this, args = slice.call(arguments, 0);
+            var parent = this, oargs = slice.call(arguments, 0), args;
             return observableCreateRefCount(function(observer) {
 
                 function handler(eventObject) {
@@ -16,6 +16,7 @@
                     observer.onNext(eventObject);
                 }
 
+                args = oargs.slice();
                 args.push(handler);
 
                 parent.on.apply(parent, args);
@@ -322,15 +323,17 @@
      * @returns {Observable} An Observable sequence which wraps the jQuery one method.
      */
     proto.oneAsObservable = function(events) {
-        var parent = this, args = arguments;
-        return observableCreate(function(observer) {
+        var parent = this, oargs = slice.call(arguments, 0), args;
+        return observableCreateRefCount(function(observer) {
 
             function handler (eventObject) {
                 eventObject.additionalArguments = slice.call(arguments, 1);
                 observer.onNext(eventObject);	
             }
 
+            args = oargs.slice();
             args.push(handler);
+            
             parent.one.apply(parent, args);
         });
     };
@@ -342,7 +345,7 @@
      */
     proto.readyAsObservable = function() {
         var parent = this;
-        return observableCreate(function(observer) {
+        return observableCreateRefCount(function(observer) {
 
             function handler(eventObject) {
                 observer.onNext(eventObject);
