@@ -5,7 +5,7 @@
 
     // Because of build optimizers
     if (typeof define === 'function' && define.amd) {
-        define(['rx', 'jQuery', 'exports'], function (Rx, jQuery, exports) {
+        define(['rx', 'jquery', 'exports'], function (Rx, jQuery, exports) {
             root.Rx = factory(root, exports, Rx, jQuery);
             return root.Rx;
         });
