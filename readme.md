@@ -25,7 +25,7 @@ To download the source of the jQuery Bindings for the Reactive Extensions for Ja
 
 ### Installing with [Bower](http://bower.io/)
 
-	bower install rx-jquery
+	bower install rxjs-jquery
 
 ### Installing with [Jam](http://jamjs.org/)
 	
