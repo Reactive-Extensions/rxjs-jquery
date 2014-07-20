@@ -1,5 +1,6 @@
 /// <reference path="../../ts/rx.jquery.d.ts" />
-jQuery(function ($) {
+
+jQuery(function ($: JQueryStatic) {
     function searchWikipedia (term) {
         return $.ajaxAsObservable({
             url: 'http://en.wikipedia.org/w/api.php',
@@ -35,6 +36,7 @@ jQuery(function ($) {
                 var results = value.data[1];
 
                 ul.empty();
+                console.log("results:", results);
                 $.each(results, function (_, result) {
                     $('<li>', { text: result, }).appendTo(ul);
                 });
@@ -46,4 +48,4 @@ jQuery(function ($) {
         );
 
     });
-})
+});
