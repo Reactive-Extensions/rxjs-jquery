@@ -1,4 +1,5 @@
 /// <reference path="../../ts/rx.jquery.d.ts" />
+
 function getOffset(event) {
     return {
         offsetX: event.offsetX === undefined ? event.layerX : event.offsetX,
@@ -8,8 +9,8 @@ function getOffset(event) {
 
 $(function () {
     var canvas = document.getElementById('tutorial');
-    if (canvas.getContext) {
-        var _canvas = canvas;
+    if ((<any>canvas).getContext) {
+        var _canvas: HTMLCanvasElement = <HTMLCanvasElement>canvas;
         var ctx = _canvas.getContext('2d');
         ctx.beginPath();
 
