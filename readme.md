@@ -41,18 +41,20 @@ Let's walk through a simple yet powerful example of the Reactive Extensions for 
 
 We'll start out with a basic skeleton for our application with script references to jQuery, RxJS, RxJS Time-based methods, and the RxJS Bindings for jQuery, along with a textbox for input and a list for our results.
 
-	<script type="text/javascript" src="jquery.js"></script>
-	<script type="text/javascript" src="rx.lite.js"></script>
-	<script type="text/javascript" src="rx-jquery.js"><script>
-	<script type="text/javascript">
-		$(function () {
-			...
-		})();
-	</script>
-	...
-	<input id="textInput" type="text"></input>
-	<ul id="results"></ul>
-	...
+```html
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="rx.lite.js"></script>
+<script type="text/javascript" src="rx-jquery.js"></script>
+<script type="text/javascript">
+	$(function () {
+		...
+	})();
+</script>
+...
+<input id="textInput" type="text"></input>
+<ul id="results"></ul>
+...
+```
 
 The goal here is to take the input from our textbox and throttle it in a way that it doesn't overload the service with requests.  To do that, we'll get the reference to the textInput using jQuery, then bind to the 'keyup' event using the keyupAsObservable method which then takes the jQuery object and transforms it into an RxJS Observable. 
  
