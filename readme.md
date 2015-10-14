@@ -100,7 +100,7 @@ function searchWikipedia(term) {
 		url: 'http://en.wikipedia.org/w/api.php',
 		data: { action: 'opensearch',
 				search: term,
-				format: 'json' }
+				format: 'json' },
 		dataType: 'jsonp'
 	});
 }
