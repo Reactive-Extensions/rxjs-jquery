@@ -97,10 +97,10 @@ Now that we have the throttled input from the textbox, we need to query our serv
 ```js
 function searchWikipedia(term) {
 	return $.ajaxAsObservable({
-		url: 'http://en.wikipedia.org/w/api.php',
+		url: 'https://en.wikipedia.org/w/api.php',
 		data: { action: 'opensearch',
 				search: term,
-				format: 'json' }
+				format: 'json' },
 		dataType: 'jsonp'
 	});
 }
@@ -116,14 +116,15 @@ Finally, we'll subscribe to our observable by calling subscribe which will recei
 var selector = $('#results');
 
 var subscription = suggestions.subscribe( 
-	function (data) {
-		selector.clear();
+	function (res) {
+		var data = res.data;
+		selector.empty();
 		$.each(data[1], function (_, text) {
 			$('<li>' + text + '</li>').appendTo(selector);
 		});
 	}, 
 	function (e) {
-		selector.clear();
+		selector.empty();
 		$('<li>Error: ' + e + '</li>').appendTo('#results');
 	}
 );
